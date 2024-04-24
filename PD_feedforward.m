@@ -1,18 +1,20 @@
-function xdot = PD_feedforward(t, x, params, q1_d, v1_d, a1_d, q2_d, v2_d, a2_d)
+function xdot = PD_feedforward(t, x)
     % Planar 2-link robot dimensions
-    m1 = params.m1;
-    m2 = params.m2;
-    L1 = params.L1;
-    Lc1 = params.Lc1;
-    Lc2 = params.Lc2;
-    I1 = params.I1;
-    I2 = params.I2;
+    m1 = 7.848;
+    m2 = 4.49;
+    L1 = 0.3;
+    Lc1 = 0.1554;
+    Lc2 = 0.0341;
+    I1 = 0.176;
+    I2 = 0.0411;
 
     % Control gains
-    kp1 = params.kp1;
-    kd1 = params.kd1;
-    kp2 = params.kp2;
-    kd2 = params.kd2;
+    kp1 = 100;
+    kd1 = 20;
+    kp2 = kp1;
+    kd2 = kd1;
+
+    [q1_d, v1_d, a1_d, q2_d, v2_d, a2_d] = cubic_trajectory(t);
 
     % Extracting state variables
     q1 = x(1);  % Current position for joint 1
