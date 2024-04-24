@@ -1,4 +1,19 @@
-function xdot = filename(x, t)
+function xdot = ryshaw_problem1(t, x)
+    % Planar 2-link robot dimensions
+    m1 = 7.848;
+    m2 = 4.49;
+    L1 = 0.3;
+    Lc1 = 0.1554;
+    Lc2 = 0.0341;
+    I1 = 0.176;
+    I2 = 0.0411;
+
+       % Control gains
+    kp1 = 100;
+    kd1 = 20;
+    kp2 = kp1;
+    kd2 = kd1;
+
     % Extracting state variables
     q1 = x(1);  % Current position for joint 1
     q1dot = x(2); % Current velocity for joint 1
@@ -22,7 +37,7 @@ function xdot = filename(x, t)
     delta = d_11*d_22 - d_21*d_12; % Determinant of D(q)
 
     % Coriolis terms
-    h = -m2*l1*lc2*sin(q2); % From SHV pg. 222
+    h = -m2*L1*Lc2*sin(q2); % From SHV pg. 222
     c121 = h;
     c211 = 0;
     c221 = h;   
