@@ -1,4 +1,4 @@
-Different form of control for the following 2-DOF planar robot
+Different forms of control for the following 2-DOF planar robot
 
 ![Screenshot 2024-04-24 205824](https://github.com/shawberryryan/Robot_Control/assets/58533756/c82fbcee-d7f3-4c50-b145-9c44aaa23cc4)
 
