@@ -29,10 +29,10 @@ function xdot = PD_feedforward(t, x)
     d_22 = m2*Lc2^2+I2;
     delta = d_11*d_22 - d_21*d_12; % Determinant of D(q)
 
-    % Coriolis terms
+    % Christoffel terms
     h = -m2*L1*Lc2*sin(q2); % From SHV pg. 222
     c121 = h;
-    c211 = 0;
+    c211 = h;
     c221 = h;   
     c112 = -h;
     

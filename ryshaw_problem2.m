@@ -54,9 +54,11 @@ function ryshaw_problem2
     legend('Torque q1', 'Torque q2');
 
     figure;
-    subplot(3,1,1); plot(T, q1_d); title('Desired Position q1_d'); xlabel('Time (s)'); ylabel('Position');
-    subplot(3,1,2); plot(T, v1_d); title('Desired Velocity v1_d'); xlabel('Time (s)'); ylabel('Velocity');
-    subplot(3,1,3); plot(T, a1_d); title('Desired Acceleration a1_d'); xlabel('Time (s)'); ylabel('Acceleration');
+    plot(T, q1_d); title('Desired Position q1_d'); xlabel('Time (s)'); ylabel('Position');
+    figure; 
+    plot(T, v1_d); title('Desired Velocity v1_d'); xlabel('Time (s)'); ylabel('Velocity');
+    figure;
+    plot(T, a1_d); title('Desired Acceleration a1_d'); xlabel('Time (s)'); ylabel('Acceleration');
 
 end
 

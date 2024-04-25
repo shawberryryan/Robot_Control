@@ -1,4 +1,4 @@
-function xdot = PD_control(t, x)
+function xdot = ID_control(t, x)
     % Planar 2-link robot dimensions
     m1 = 7.848;
     m2 = 4.49;
@@ -14,20 +14,13 @@ function xdot = PD_control(t, x)
     kp2 = kp1;
     kd2 = kd1;
 
+    [q1_d, v1_d, a1_d, q2_d, v2_d, a2_d] = cubic_trajectory(t);
+
     % Extracting state variables
     q1 = x(1);  % Current position for joint 1
     q1dot = x(2); % Current velocity for joint 1
     q2 = x(3);  % Current position for joint 2
     q2dot = x(4); % Current velocity for joint 2
-
-    % Desired positions (setpoints)
-    if t < 1
-        q1_d = pi/2; % Initial desired position for q1
-        q2_d = pi/2; % Initial desired position for q2
-    else
-        q1_d = 0; % Change to new desired position for q1 after t=1
-        q2_d = 0; % Change to new desired position for q2 after t=1
-    end
 
     % Intertia matrix terms
     d_11 = m1*Lc1^2 + m2*(L1^2 + Lc2^2 + 2*L1*Lc2*cos(q2)) + I1 + I2;
@@ -42,10 +35,22 @@ function xdot = PD_control(t, x)
     c211 = h;
     c221 = h;   
     c112 = -h;
+
+    C = [h*q2dot, (h*q2dot + h*q1dot); -h*q1dot, 0]; % Page 222 SHV
+    D = [d_11, d_12; d_21, d_22];
     
-    % Control inputs, range limited to -10 <= Ti <= 10
-    T1 = max(-10, min(10, kp1*(q1_d - q1) - kd1*q1dot));
-    T2 = max(-10, min(10, kp2*(q2_d - q2) - kd2*q2dot));
+    % Outer control law
+    aq1 = a1_d + kp1*(q1_d - q1) + kd1*(v1_d - q1dot);
+    aq2 = a2_d + kp2*(q2_d - q2) + kd2*(v2_d - q2dot);
+    
+    % Inverse dynamics control
+    a_q = [aq1; aq2];
+    dot_q = [q1dot; q2dot];
+    tau = D*a_q + C*dot_q;
+    
+    % Extract individual torques
+    T1 = tau(1);
+    T2 = tau(2);
 
 
     a1 = T1 - c121*q1dot*q2dot - c211*q2dot*q1dot - c221*q2dot^2;

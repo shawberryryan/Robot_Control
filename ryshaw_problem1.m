@@ -31,19 +31,18 @@ legend('q1 desired', 'q2 desired');
 
 
 figure;
-subplot(3,1,1);
 plot(T, X(:,1), 'b-', T, X(:,3), 'r--');
 ylabel('Joint Angles (rad)');
 title('Joint Responses');
 legend('q1', 'q2');
 
-subplot(3,1,2);
+figure;
 plot(T, X(:,1)-q1_d, 'b-', T, X(:,3)-q2_d, 'r--');
 ylabel('Error (rad)');
 title('Tracking Errors');
 legend('Error q1', 'Error q2');
 
-subplot(3,1,3);
+figure;
 plot(T, T1, 'b-', T, T2, 'r--');
 ylabel('Torque (Nm)');
 xlabel('Time (s)');
